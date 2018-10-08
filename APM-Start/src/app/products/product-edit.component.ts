@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
 import { MessageService } from '../messages/message.service';
 
@@ -9,14 +10,21 @@ import { ProductService } from './product.service';
     templateUrl: './app/products/product-edit.component.html',
     styleUrls: ['./app/products/product-edit.component.css']
 })
-export class ProductEditComponent {
+export class ProductEditComponent implements OnInit {
     pageTitle: string = 'Product Edit';
     errorMessage: string;
 
     product: IProduct;
 
     constructor(private productService: ProductService,
-                private messageService: MessageService) { }
+        private messageService: MessageService,
+        private route: ActivatedRoute) {
+
+
+    }
+    ngOnInit() {
+        this.route.data.subscribe(product => this.product = product['product'] || null)
+    }
 
     getProduct(id: number): void {
         this.productService.getProduct(id)
@@ -40,7 +48,7 @@ export class ProductEditComponent {
         if (this.product.id === 0) {
             // Don't delete, it was never saved.
             this.onSaveComplete();
-       } else {
+        } else {
             if (confirm(`Really delete the product: ${this.product.productName}?`)) {
                 this.productService.deleteProduct(this.product.id)
                     .subscribe(

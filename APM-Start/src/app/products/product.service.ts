@@ -19,7 +19,7 @@ export class ProductService {
     getProducts(): Observable<IProduct[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
-            .do(data => console.log('getProducts: ' + JSON.stringify(data)))
+            // .do(data => console.log('getProducts: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -30,7 +30,7 @@ export class ProductService {
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
-            .do(data => console.log('getProduct: ' + JSON.stringify(data)))
+            // .do(data => console.log('getProduct: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -40,7 +40,7 @@ export class ProductService {
 
         const url = `${this.baseUrl}/${id}`;
         return this.http.delete(url, options)
-            .do(data => console.log('deleteProduct: ' + JSON.stringify(data)))
+            // .do(data => console.log('deleteProduct: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -58,7 +58,7 @@ export class ProductService {
         product.id = undefined;
         return this.http.post(this.baseUrl, product, options)
             .map(this.extractData)
-            .do(data => console.log('createProduct: ' + JSON.stringify(data)))
+            // .do(data => console.log('createProduct: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -66,13 +66,15 @@ export class ProductService {
         const url = `${this.baseUrl}/${product.id}`;
         return this.http.put(url, product, options)
             .map(() => product)
-            .do(data => console.log('updateProduct: ' + JSON.stringify(data)))
+            // .do(data => console.log('updateProduct: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
     private extractData(response: Response) {
         let body = response.json();
+        // console.log('extract data', body);
         return body.data || {};
+
     }
 
     private handleError(error: Response): Observable<any> {
