@@ -1,19 +1,23 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from "@angular/core";
 
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from "../shared/shared.module";
 
-import { MessageComponent } from './message.component';
-import { MessageService } from './message.service';
+import { MessageComponent } from "./message.component";
+import { MessageService } from "./message.service";
+import { RouterModule } from "@angular/router";
 
 @NgModule({
-    imports: [
-        SharedModule
-    ],
-    declarations: [
-        MessageComponent
-    ],
-    providers: [
-        MessageService
-    ]
+  imports: [
+    SharedModule,
+    RouterModule.forChild([
+      {
+        path: "message",
+        component: MessageComponent,
+        outlet: "popup"
+      }
+    ])
+  ],
+  declarations: [MessageComponent],
+  providers: [MessageService]
 })
-export class MessageModule { }
+export class MessageModule {}
